@@ -1,4 +1,4 @@
-# Immersive Forest Portfolio
+# Personal Portfolio
 
 ## Summary
 Build a greenfield portfolio in `Next.js` with `React Three Fiber` as a desktop-first, cinematic 3D experience that still stays recruiter-usable.
