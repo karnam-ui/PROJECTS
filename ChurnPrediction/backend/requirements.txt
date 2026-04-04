@@ -7,3 +7,7 @@ pymysql
 python-multipart
 #pip install -r requirements.txt ... u co do this to install all the dependencies for the directly.
 # Make sure to run this command in the terminal while being in the backend directory.
+
+#for checking the get post methods of the api you can use postman or curl commands in terminal. 
+#or just got oto localhost:8000/docs to see the interactive documentation provided by FastAPI. 
+#You can test the endpoints directly from there.
