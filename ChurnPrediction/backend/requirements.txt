@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pandas
+scikit-learn
+sqlalchemy
+pymysql
+python-multipart
+#pip install -r requirements.txt ... u co do this to install all the dependencies for the directly.
+# Make sure to run this command in the terminal while being in the backend directory.
