@@ -1,10 +1,16 @@
-fastapi
-uvicorn
-pandas
-scikit-learn
-sqlalchemy
-pymysql
-python-multipart
+fastapi - web framework for building APIs
+uvicorn - ASGI server for running FastAPI applications
+pydantic - data validation and settings management using Python type annotations
+pandas - data manipulation and analysis library
+joblib - for saving and loading the trained model
+scikit-learn - machine learning library
+sqlalchemy - ORM for database interactions
+pymysql - MySQL driver for Python
+python-multipart - for handling multipart(csv) form data
+python-jose - for handling JSON Web Tokens
+passlib - for password hashing
+bcrypt - for password hashing(actual conversion)
+slowapi - for rate limiting
 #pip install -r requirements.txt ... u co do this to install all the dependencies for the directly.
 # Make sure to run this command in the terminal while being in the backend directory.
 

@@ -1,8 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv
+import os
 
-DATABASE_URL = "mysql+pymysql://root:root@localhost:3306/churndb"
+load_dotenv() # Load environment variables from .env file
+
+DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
@@ -15,8 +19,8 @@ def get_db():
         db.close()
 
 #docker run --name churn-mysql \
-#   -e MYSQL_ROOT_PASSWORD=root \
-#   -e MYSQL_DATABASE=churndb \
+#   -e MYSQL_ROOT_PASSWORD=* \
+#   -e MYSQL_DATABASE=* \
 #   -p 3306:3306 \
 #   -d mysql:8
 #using this snippet to setup mysql database in docker. 
