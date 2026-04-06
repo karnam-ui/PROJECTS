@@ -1,19 +1,15 @@
-fastapi - web framework for building APIs
-uvicorn - ASGI server for running FastAPI applications
-pydantic - data validation and settings management using Python type annotations
-pandas - data manipulation and analysis library
-joblib - for saving and loading the trained model
-scikit-learn - machine learning library
-sqlalchemy - ORM for database interactions
-pymysql - MySQL driver for Python
-python-multipart - for handling multipart(csv) form data
-python-jose - for handling JSON Web Tokens
-passlib - for password hashing
-bcrypt - for password hashing(actual conversion)
-slowapi - for rate limiting
-#pip install -r requirements.txt ... u co do this to install all the dependencies for the directly.
-# Make sure to run this command in the terminal while being in the backend directory.
-
-#for checking the get post methods of the api you can use postman or curl commands in terminal. 
-#or just got oto localhost:8000/docs to see the interactive documentation provided by FastAPI. 
-#You can test the endpoints directly from there.
+fastapi
+uvicorn
+pydantic
+pandas
+joblib
+scikit-learn
+sqlalchemy
+pymysql
+python-multipart
+python-jose
+passlib
+bcrypt
+slowapi
+python-dotenv
+cryptography

@@ -1,0 +1,32 @@
+
+
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: churndb
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+          condition: service_healthy #waits until db is healthy before starting app
+    environment:
+      - DATABASE_URL=mysql+pymysql://root:root@db:3306/churndb
+      - SECRET_KEY=churn-app-secret-key-2026
+  
+volumes:
+  db_data:
