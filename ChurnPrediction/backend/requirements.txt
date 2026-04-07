@@ -13,3 +13,6 @@ bcrypt
 slowapi
 python-dotenv
 cryptography
+pytest
+pytest-asyncio
+httpx
