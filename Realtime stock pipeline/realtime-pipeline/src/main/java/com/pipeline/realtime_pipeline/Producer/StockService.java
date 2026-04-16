@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.pipeline.realtime_pipeline.model.StockData;
+
 @Service
 public class StockService {
 

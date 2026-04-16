@@ -1,6 +1,6 @@
 //defining a class to represent the stock data that we will be processing in our real-time pipeline.
 // We will use Lombok annotations to reduce boilerplate code for getters, setters, constructors, and builders.
-package com.pipeline.realtime_pipeline.Producer;
+package com.pipeline.realtime_pipeline.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
