@@ -1,4 +1,4 @@
-package com.pipeline.realtime_pipeline.Repository;
+package com.pipeline.realtime_pipeline.repository;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 // This class is responsible for fetching live stock prices from an external API (like Alpha Vantage) 
 // and providing it to the StockDataProducer for sending to Kafka.
-package com.pipeline.realtime_pipeline.Producer;
+package com.pipeline.realtime_pipeline.producer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;

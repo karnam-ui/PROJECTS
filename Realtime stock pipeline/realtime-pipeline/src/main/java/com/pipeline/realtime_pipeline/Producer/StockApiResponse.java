@@ -1,4 +1,4 @@
-package com.pipeline.realtime_pipeline.Producer;
+package com.pipeline.realtime_pipeline.producer;
 
 //defining a class to represent the response we get from the stock API when we fetch live stock data. 
 // This class will be used to deserialize the JSON response from the API into a Java object that we can work

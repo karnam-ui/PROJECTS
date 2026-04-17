@@ -1,4 +1,4 @@
-package com.pipeline.realtime_pipeline.Consumer;
+package com.pipeline.realtime_pipeline.consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -8,9 +8,9 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import com.pipeline.realtime_pipeline.Repository.StockPriceRepository;
 import com.pipeline.realtime_pipeline.model.StockData;
 import com.pipeline.realtime_pipeline.model.StockPrice;
+import com.pipeline.realtime_pipeline.repository.StockPriceRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

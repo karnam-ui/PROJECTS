@@ -53,6 +53,12 @@ public class StockPrice {
     @Column(name = "Volume")
     private long volume;
 
+    @Column(name = "Latest_Trading_Day")
+    private String latestTradingDay;
+
+    @Column(name = "Previous_Close")
+    private double previousClose;
+
     @Column(name = "Created_At")
     private long createdAt;
 

@@ -1,4 +1,4 @@
-package com.pipeline.realtime_pipeline.Producer;
+package com.pipeline.realtime_pipeline.producer;
 
 import java.util.List;
 import java.util.Random;
