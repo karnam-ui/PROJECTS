@@ -31,18 +31,18 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
 
       properties:
-        spring.json.trusted.packages: "com.pipeline.model"
+        spring.json.trusted.packages: "com.pipeline_realtime-pipeline.model"
         # Security whitelist — JsonDeserializer blocks unknown packages by default.
         # Without this: ClassNotTrustedException at runtime, no error during build.
 
-        spring.json.value.default.type: "com.pipeline.model.StockData"
+        spring.json.value.default.type: "com.pipeline_realtime-pipeline.model.StockData"
         # Since producer sends no type header, consumer must be told explicitly:
         # "deserialize every message value into a StockData object."
 
-    data:
-      redis:
-        host: localhost
-        port: 6379
+  data:
+    redis:
+      host: localhost
+      port: 6379
     # Spring Boot auto-creates a Lettuce connection pool from these two values.
     # Injected via @Value("${spring.redis.host}") in RedisConfig.java.
     # For Redis with auth: add password: yourpassword
@@ -54,6 +54,7 @@ spring:
 
     username: admin
     password: admin
+
     driver-class-name: org.postgresql.Driver
     # Tells Spring which JDBC driver to load. Matches the postgresql dependency
     # in pom.xml — Spring Boot 3 can usually auto-detect this, but explicit is safer.

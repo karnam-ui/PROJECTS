@@ -26,7 +26,7 @@ public class StockDataProducer {
     private final Random random = new Random(); //a Random instance to generate random stock data values
 
     private final KafkaTemplate<String, StockData> kafkaTemplate; //a service for sending messages to Kafka, which will be injected by Spring
-    private final StockService stockService; //StockService to fetch complete stock data
+    private final StockManager stockService; //StockService to fetch complete stock data
     
     @Scheduled(fixedRate = 2000) //to schedule the sendStockData method to run every 2 seconds, simulating real-time data generation
 

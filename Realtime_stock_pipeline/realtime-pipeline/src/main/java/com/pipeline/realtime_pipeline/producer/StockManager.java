@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import com.pipeline.realtime_pipeline.model.StockData;
 
 @Service
-public class ExternalStockService {
+public class StockManager {
 
     @Value("${stock.api.key}")
     private String apiKey;//in application.properties
