@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pipeline.realtime_pipeline.dto.ApiResponse;
 import com.pipeline.realtime_pipeline.dto.StockPriceDTO;
-import com.pipeline.realtime_pipeline.dto.StockQueryService;
+import com.pipeline.realtime_pipeline.dto.StockService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin(origins = "*")          // allow Grafana (different port) to call this API
 public class StockController {
 
-    private final StockQueryService stockService;  // injected — controller knows nothing about Redis or Postgres
+    private final StockService stockService;  // injected — controller knows nothing about Redis or Postgres
 
     // ── GET /prices/latest ─────────────────────────────────────────────────
     // Returns: { "status": "ok", "data": { "AAPL": "182.45", "GOOGL": "140.10", ... } }

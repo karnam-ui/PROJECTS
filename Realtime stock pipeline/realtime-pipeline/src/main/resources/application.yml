@@ -1,0 +1,132 @@
+spring:
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    # The Kafka broker address. Spring injects this wherever you used
+    # @Value("${spring.kafka.bootstrap-servers}") in your config classes.
+    # In production: "broker1:9092,broker2:9092,broker3:9092" for redundancy.
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # How to convert the message key (symbol string "AAPL") to bytes.
+
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      # How to convert the StockData object to bytes — Jackson does the JSON work.
+
+      properties:
+        spring.json.add.type.headers: false
+        # Don't embed "com.pipeline.model.StockData" as a Kafka header.
+        # Keeps messages clean — the consumer is told the type explicitly below.
+
+    consumer:
+      group-id: stock-consumer-group
+      # Kafka tracks this group's read offset per partition.
+      # App restart → resumes from where it left off. Change this id → starts fresh.
+
+      auto-offset-reset: latest
+      # First time this group connects: start from NOW (ignore old messages).
+      # Use "earliest" if you want to replay all historical messages on first run.
+
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+      properties:
+        spring.json.trusted.packages: "com.pipeline.model"
+        # Security whitelist — JsonDeserializer blocks unknown packages by default.
+        # Without this: ClassNotTrustedException at runtime, no error during build.
+
+        spring.json.value.default.type: "com.pipeline.model.StockData"
+        # Since producer sends no type header, consumer must be told explicitly:
+        # "deserialize every message value into a StockData object."
+
+    data:
+      redis:
+        host: localhost
+        port: 6379
+    # Spring Boot auto-creates a Lettuce connection pool from these two values.
+    # Injected via @Value("${spring.redis.host}") in RedisConfig.java.
+    # For Redis with auth: add password: yourpassword
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pipelinedb
+    # JDBC URL format: jdbc:{driver}://{host}:{port}/{database}
+    # Spring Boot creates a HikariCP connection pool from this at startup.
+
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+    # Tells Spring which JDBC driver to load. Matches the postgresql dependency
+    # in pom.xml — Spring Boot 3 can usually auto-detect this, but explicit is safer.
+
+    hikari:
+      # HikariCP is Spring Boot's default connection pool — fastest available.
+      maximum-pool-size: 10
+      # Max DB connections open at once. With 3 consumer threads + API threads,
+      # 10 is comfortable. Don't set this too high — each connection uses DB memory.
+
+      minimum-idle: 2
+      # Keep 2 connections warm even when idle — avoids cold-start latency
+      # on the first request after a quiet period.
+
+      connection-timeout: 20000
+      # Throw an exception if no connection is available within 20 seconds.
+      # Prevents threads from hanging indefinitely waiting for a DB connection.
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      # update  → CREATE TABLE IF NOT EXISTS + ALTER TABLE for new columns (dev-safe)
+      # create  → DROP + CREATE every startup (data loss — test only)
+      # validate→ crash if schema doesn't match entities (production)
+      # none    → do nothing (production with Flyway/Liquibase migrations)
+
+    show-sql: true
+    # Logs every SQL Hibernate generates to the console.
+    # Turn off in production — very noisy at scale.
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        # PostgreSQL-specific SQL generation — uses BIGSERIAL, FLOAT8, etc.
+        # Without this Hibernate may generate generic ANSI SQL that misses
+        # PostgreSQL-specific optimizations.
+
+        format_sql: true
+        # Pretty-prints the logged SQL — makes show-sql output readable.
+
+        jdbc:
+          batch_size: 50
+          # Batch up to 50 INSERTs into a single round-trip to the DB.
+          # With high-frequency Kafka messages this cuts DB load significantly.
+          # Python's psycopg2 did one INSERT per message — this is much faster.
+
+  # ── Scheduling ─────────────────────────────────────────────────────────────
+  task:
+    scheduling:
+      pool:
+        size: 5
+        # Thread pool size for @Scheduled methods.
+        # Default is 1 — a single slow @Scheduled method blocks all others.
+        # 5 gives room for the producer + any future scheduled tasks.
+
+# ── Server ──────────────────────────────────────────────────────────────────
+server:
+  port: 8000
+  # Embedded Tomcat listens on port 8000 — same as Python's uvicorn port.
+  # Grafana calls http://localhost:8000/prices/latest
+
+# ── Logging ──────────────────────────────────────────────────────────────────
+logging:
+  level:
+    com.pipeline: INFO
+    # INFO = show log.info() calls. Change to DEBUG for verbose Spring internals.
+
+    org.springframework.kafka: WARN
+    # Kafka client is chatty at INFO — WARN silences the noise, keeps your
+    # logs focused on your own StockDataProducer and StockConsumerService output.
+
+    org.hibernate.SQL: DEBUG
+    # Show the raw SQL statements (pairs with show-sql: true above).
+
+    com.zaxxer.hikari: WARN
+    # Silence HikariCP connection pool logs — only show warnings.
